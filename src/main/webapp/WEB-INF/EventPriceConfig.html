@@ -1,0 +1,60 @@
+<div id="priceconfigdiv" style="display: none">
+  <table>
+    <tr>
+      <th>Event</th>
+      <th colspan="2"><select>
+        <optgroup label="event list">
+          <option>Event 1</option>
+          <option>Event 2</option>
+        </optgroup>
+      </select></th>
+    </tr>
+    <tr>
+      <td>Prize</td>
+      <td colspan="2">
+        <select>
+          <option>Full house</option>
+          <option>First Row</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>No. of Qty for <span></span> </td><td><input type="text"  /></td><button type="button" value="Add" /></td>
+    </tr>
+  </table>
+  <table>
+    <tbody>
+    <tr>
+      <th>Event Name</th><th> --- </th>
+      <th>Prize Name</th><th> --- </th>
+      <th>Prize Name (1)</th><th> <input type="text"> </th>
+      <th>Prize Name (2)</th><th> <input type="text"> </th>
+      <th>Prize Name (3)</th><th> <input type="text"> </th>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+    <td><button type="button">Save</button></td>
+    <td><button type="button">Cancel</button></td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+<div class="container modalContainer" id="priceconfigureddiv"  style="display: none">
+  <div class="modalContent">
+<table>
+  <thead>
+    <tr>
+      Event name : <span ng-bind="prizeconfigureddiveventname"></span>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+      <th></th>
+  </tr>
+  </tbody>
+</table>
+    <div><button type="button" ng-click="closepriceConfigureView();">Close</button>
+</div>
+  </div>
+</div>

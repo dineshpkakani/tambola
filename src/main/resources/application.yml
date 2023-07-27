@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: Root@123
+    url: jdbc:mysql://localhost:3306/housie
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        diaclet: org.hibernate.diaclet.MySQL5Dialect
+
+logging:
+  file:
+    name: d:/logs/application-debug.log
+  level:
+    org:
+      springframework: DEBUG
+
+  devtools:
+    restart:
+      enabled: true

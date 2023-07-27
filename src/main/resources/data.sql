@@ -1,0 +1,1 @@
+insert into tempschema (name) values('ganesh');
