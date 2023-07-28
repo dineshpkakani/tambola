@@ -16,4 +16,6 @@ public class HomeController {
     public String adminPage(Model model) {
         return "/WEB-INF/admin.jsp";
     }
+
+
 }

@@ -25,19 +25,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/").permitAll()
-                .and().formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginPage("/login").successHandler(myAuthenticationSuccessHandler())
+        http
+                .authorizeRequests()
+                .antMatchers("/resources/**", "/registration").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+               // .usernameParameter("username")
+                //.passwordParameter("password")
+                //.loginPage("/login")
+                .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/login")
+                .logout()
                 .permitAll();
-
         http.csrf().disable();
     }
     @Bean
@@ -45,11 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new UrlAuthenticationSuccessHandler();
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception{
-        return super.authenticationManagerBean();
-    }
+
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
