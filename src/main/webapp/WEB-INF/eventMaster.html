@@ -4,7 +4,8 @@
     <td colspan="2">
       <table width="100%">
         <tr>
-        <td width="30%"><input type="text" width="200px" style="max-width: 200px;" class="form-control" placeholder="search event" ng-model="txteventsearch" style="cursor: inherit; padding-left: 25px;"></td>
+          <td width="20%">&nbsp;</td>
+        <td width="20%"><input type="text" width="200px" style="max-width: 200px;" class="form-control" placeholder="search event" ng-model="txteventsearch" style="cursor: inherit; padding-left: 25px;"></td>
         <td width="20%">
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" ng-click="loadEventByTitle()" id="">Search</button>
@@ -29,6 +30,7 @@
     <th title="Total ticket sold">Sold Tickets</th>
     <th title="number of players">Players</th>
     <th title="current status">Status</th>
+    <th title="current status">Prize</th>
     <th title="Summary">Summary</th>
     <th>Edit</th>
   </tr>
@@ -42,8 +44,8 @@
     <td ng-bind="event.soldTickets"></td>
     <td ng-bind="event.noOfUsers"></td>
     <td ng-bind="event.status"></td>
-    <th ng-click="openSummaryModal();" ><img src="/resources/images/dashboard.png"/></th>
-    <th ng-click="priceConfigureView();" ><img src="/resources/images/prize.png"/></th>
+    <th ng-click="openpriceConfigureView(event.eventId);" ><img src="/resources/images/prize.png" width="20px"/></th>
+    <th ng-click="openSummaryModal(event.eventId);" ><img src="/resources/images/dashboard.png"/></th>
     <td ng-click="loadEventById(event.eventId)"><img src="/resources/images/edit-solid.svg" width="20px" /></td>
   </tr>
   </tbody>

@@ -7,6 +7,7 @@ app.controller('adminController', function($scope, $http) {
     $scope.currentpage=1;
     $scope.eventID=0;
     $scope.txteventsearch='';
+    $scope.prizeListData=[];
 
     /** common function **/
     $scope.init=function(){
@@ -185,7 +186,7 @@ app.controller('adminController', function($scope, $http) {
             $("#btnNext").addClass("disabled");
         }
     }
-    $scope.openSummaryModal=function (){
+    $scope.openSummaryModal=function (eventid){
         $('#eventsummarymodal').fadeIn();
     }
     $scope.closeSummaryModal=function (){
@@ -198,7 +199,7 @@ app.controller('adminController', function($scope, $http) {
         $scope.ajax(urlName,null,"GET",$scope.loadPrizeListSuccess,$scope.AjaxErrorMessage);
     }
     $scope.loadPrizeListSuccess=function (response){
-        $scope.prizeList=response.data.lst[0];
+        $scope.prizeListData=response.data.lst[0];
     };
     $scope.openpriceConfigureView=function (){
         $('#priceconfigureddiv').fadeIn();
