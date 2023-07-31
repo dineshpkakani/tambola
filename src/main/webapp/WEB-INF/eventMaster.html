@@ -25,9 +25,9 @@
   <tr>
     <th title="name of price">Name</th>
     <th title="date of price">Date</th>
-    <th title="Tickets Per Person">Max Tickets</th>
+    <!--<th title="Tickets Per Person">Max Tickets</th>-->
     <th title="Ticket price">Price</th>
-    <th title="Total ticket sold">Sold Tickets</th>
+    <!--<th title="Total ticket sold">Sold Tickets</th>-->
     <th title="number of players">Players</th>
     <th title="current status">Status</th>
     <th title="current status">Prize</th>
@@ -39,9 +39,9 @@
   <tr ng-repeat="event in eventList track by $index">
     <td ng-bind="event.name"></td>
     <td ng-bind="event.eventDate"></td>
-    <td ng-bind="event.noOfTickets"></td>
+    <!--<td ng-bind="event.noOfTickets"></td>-->
     <td ng-bind="event.pricePerTicket"></td>
-    <td ng-bind="event.soldTickets"></td>
+    <!--<td ng-bind="event.soldTickets"></td>-->
     <td ng-bind="event.noOfUsers"></td>
     <td ng-bind="event.status"></td>
     <th ng-click="openpriceConfigureView(event.eventId);" ><img src="/resources/images/prize.png" width="20px"/></th>
@@ -67,28 +67,15 @@
   <div class="modalContent">
 
       <div style="padding-bottom: 20px">&nbsp;</div>
-            <label for="txteventname" >Event Name</label>
-      <input type="text" id="txteventname" ng-model="txteventname" />
-
-      <label for="txteventdate">Date</label>
-      <input type="date" id="txteventdate" ng-model="txteventdate " />
-
-       <label for="txtperprice">Price Per Ticket</label>
-      <input type="text" id="txtperprice" ng-model="txtperprice" />
-
-      <label for="txtperprice">Status</label>
-      <input type="text" id="scltstatus" ng-model="scltstatus" />
-
-      <label for="txtperprice">Total Collection</label>
-      <input type="text" id="scltstatus" ng-model="scltstatus" />
-
-      <label for="txtsoldtickets">Sold Tickets</label>
-      <input type="text" id="txtsoldtickets" ng-model="txtsoldtickets" />
-
-      <label for="txttotplayers">Total Players</label>
-      <input type="text" id="txttotplayers"  ng-model="txttotplayers"/>
-
-      <input type="button" value="Close"  style="width: 25%" ng-click="closeSummaryModal();">
+            <label  >Event Name : {{smreventname}}</label>
+            <label >Date : {{smreventdate}}</label>
+             <label>Ticket Price: {{smrticketprice}}</label>
+            <label>Status : {{smrstatus}}</label>
+            <label>Total Collection : {{smrtotalcollection}}</label>
+            <label>Total Prize distributed : {{smrtotalprize}}</label>
+            <label>Total Sold tickets : {{smrsoldtickets}}</label>
+            <label>Total Players : {{smrnoofplayers}}</label>
+          <input type="button" value="Close"  style="width: 25%" ng-click="closeSummaryModal();">
 
   </div>
 </div>

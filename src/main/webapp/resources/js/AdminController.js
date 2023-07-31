@@ -64,7 +64,6 @@ app.controller('adminController', function($scope, $http) {
             var urlName=$scope.appName+"/event/get/name/"+$scope.txteventsearch+"?page=0&size="+$scope.totalDisplayRecord;
             $scope.ajax(urlName,null,"GET",$scope.loadEventListSuccess,$scope.AjaxErrorMessage);
         }
-
     }
     $scope.loadEventById=function(id){
         $scope.eventID=id;
@@ -133,8 +132,6 @@ app.controller('adminController', function($scope, $http) {
                     let dd=localeventdate[2];
                     eventDate = mm + '/' + dd + '/' + yyyy;
                 }
-
-
             }
 
         if($scope.soldTickets==''){
@@ -154,7 +151,6 @@ app.controller('adminController', function($scope, $http) {
         }
 
         $scope.ajax(urlName,param,methodtype, function(response){
-            console.log("response"+response);
             if(response.data.success!=undefined){
                 alert(response.data.success);
             }else{
@@ -187,11 +183,23 @@ app.controller('adminController', function($scope, $http) {
         }
     }
     $scope.openSummaryModal=function (eventid){
+
+        $scope.eventID=eventid;
+        var urlName=$scope.appName+"/event/get/id/"+ $scope.eventID;
+
+        $scope.ajax(urlName,null,methodtype, function(response){
+            if(response.data.success!=undefined){
+                console.log(response.data);
+            }else{
+                alert(response.data.failed);
+            }
+        });
         $('#eventsummarymodal').fadeIn();
     }
     $scope.closeSummaryModal=function (){
         $('#eventsummarymodal').fadeOut();
     }
+
 
     /** Prize master function's **/
     $scope.priceList=function(){

@@ -49,7 +49,7 @@ public class EventController {
         return new ResponseEntity<>(responseListObj, HttpStatus.OK);
     }
     @GetMapping(value = "/get/id/{id}")
-    public ResponseEntity<ResponseListObj> getByName(@PathVariable long id) {
+    public ResponseEntity<ResponseListObj> getByEventId(@PathVariable long id) {
 
         ResponseListObj responseListObj= eventService.findByEventId(id);
 
