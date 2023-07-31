@@ -67,16 +67,50 @@
   <div class="modalContent">
 
       <div style="padding-bottom: 20px">&nbsp;</div>
-            <label  >Event Name : {{smreventname}}</label>
-            <label >Date : {{smreventdate}}</label>
-             <label>Ticket Price: {{smrticketprice}}</label>
-            <label>Status : {{smrstatus}}</label>
-            <label>Total Collection : {{smrtotalcollection}}</label>
-            <label>Total Prize distributed : {{smrtotalprize}}</label>
-            <label>Total Sold tickets : {{smrsoldtickets}}</label>
-            <label>Total Players : {{smrnoofplayers}}</label>
-          <input type="button" value="Close"  style="width: 25%" ng-click="closeSummaryModal();">
+          <table>
+            <thead>
+              <tr>
+                 <th>Event name:</th>
+                <th>{{summary.eventname}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Date: </td>
+                <td>{{summary.eventdate}}</td>
+              </tr>
+              <tr>
+                <td>Ticket Price: </td>
+                <td>{{summary.ticketprice}}</td>
+              </tr>
+              <tr>
+                <td>Status: </td>
+                <td>{{summary.status}}</td>
+              </tr>
+              <tr>
+                <td>Total Collection: </td>
+                <td>{{summary.totalcollection}}</td>
+              </tr>
+              <tr>
+                <td>Total Prize distributed:</td>
+                <td>{{summary.totalprize}}</td>
+              </tr>
+              <tr>
+                <td>Total Sold tickets:</td>
+                <td>{{summary.soldtickets}}</td>
+              </tr>
+              <tr>
+                <td>Total Players:</td>
+                <td>{{summary.noofplayers}}</td>
+              </tr>
 
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="2"><input type="button" value="Close"  style="width: 25%" ng-click="closeSummaryModal();"></td>
+            </tr>
+            </tfoot>
+          </table>
   </div>
 </div>
 

@@ -8,6 +8,16 @@ app.controller('adminController', function($scope, $http) {
     $scope.eventID=0;
     $scope.txteventsearch='';
     $scope.prizeListData=[];
+    $scope.summary={
+        eventname:'',
+        eventdate:'',
+        ticketprice:'',
+        status:'',
+        totalcollection:'',
+        totalprize:'',
+        soldtickets:'',
+        noofplayers:''
+    };
 
     /** common function **/
     $scope.init=function(){
@@ -186,15 +196,25 @@ app.controller('adminController', function($scope, $http) {
 
         $scope.eventID=eventid;
         var urlName=$scope.appName+"/event/get/id/"+ $scope.eventID;
-
-        $scope.ajax(urlName,null,methodtype, function(response){
-            if(response.data.success!=undefined){
-                console.log(response.data);
+        $('#eventsummarymodal').fadeIn();
+        $scope.ajax(urlName,null,"GET", function(response){
+            if(response.status==200){
+                let data=response.data.lst[0];
+                $scope.summary={
+                    eventname:data.name,
+                    eventdate:data.eventDate,
+                    ticketprice:data.pricePerTicket,
+                    status:data.status,
+                    totalcollection:'0',
+                    totalprize:'0',
+                    soldtickets:data.soldTickets,
+                    noofplayers:data.noOfUsers
+                };
             }else{
                 alert(response.data.failed);
             }
         });
-        $('#eventsummarymodal').fadeIn();
+
     }
     $scope.closeSummaryModal=function (){
         $('#eventsummarymodal').fadeOut();
