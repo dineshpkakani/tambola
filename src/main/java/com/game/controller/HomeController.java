@@ -14,7 +14,12 @@ public class HomeController {
 
     @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
     public String adminPage(Model model) {
-        return "/WEB-INF/admin.jsp";
+        return "/WEB-INF/admin.jsp?utype=Admin";
+    }
+
+    @RequestMapping(value = {"/welcome"}, method = RequestMethod.GET)
+    public String welcomePage(Model model) {
+        return "/WEB-INF/admin.jsp?utype=User";
     }
 
 

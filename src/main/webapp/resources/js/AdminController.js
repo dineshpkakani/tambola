@@ -223,7 +223,7 @@ app.controller('adminController', function($scope, $http) {
 
     /** Prize master function's **/
     $scope.priceList=function(){
-        var urlName=$scope.appName+"/prize/getall";
+        var urlName=$scope.appName+"/prizemaster/getall";
         $scope.ajax(urlName,null,"GET",$scope.loadPrizeListSuccess,$scope.AjaxErrorMessage);
     }
     $scope.loadPrizeListSuccess=function (response){

@@ -1,7 +1,8 @@
 package com.game.service;
 
 import com.game.dto.ResponseListObj;
-import com.game.entity.Prize;
+
+import com.game.entity.PrizeEntity;
 import com.game.repository.PrizeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PrizeServiceImpl implements PrizeService{
     }
     @Override
     public ResponseEntity<ResponseListObj> findAllPrizeList() {
-        List<Prize> pageData= (List<Prize>) prizeRepository.findAll();
+        List<PrizeEntity> pageData= (List<PrizeEntity>) prizeRepository.findAll();
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .currentpage(1)
                 .totalrecords(pageData.size())
@@ -26,5 +27,14 @@ public class PrizeServiceImpl implements PrizeService{
                 .build();
         return ResponseEntity.ok(responseListObj);
 
+    }
+
+    @Override
+    public ResponseEntity<ResponseListObj> findNameList() {
+        List<String> pageData= prizeRepository.findNameByQuery();
+        ResponseListObj responseListObj= ResponseListObj.builder()
+                .lst(Collections.singletonList(pageData))
+                .build();
+        return ResponseEntity.ok(responseListObj);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/prize")
+@RequestMapping("/prizemaster")
 public class PrizeMasterController {
 
     PrizeService prizeService;
@@ -19,6 +19,10 @@ public class PrizeMasterController {
     @GetMapping("/getall")
     public ResponseEntity<ResponseListObj> getAll(){
         return prizeService.findAllPrizeList();
+    }
+    @GetMapping("/getname")
+    public ResponseEntity<ResponseListObj> getName(){
+        return prizeService.findNameList();
     }
 
 }

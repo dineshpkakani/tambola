@@ -1,7 +1,7 @@
 package com.game.controller;
 
 import com.game.dto.ResponseListObj;
-import com.game.entity.Event;
+import com.game.entity.EventEntity;
 import com.game.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +37,12 @@ public class EventController {
 
         return new ResponseEntity<>(responseListObj, HttpStatus.OK);
     }
+    @GetMapping(value = "/geteventname")
+    public ResponseEntity<ResponseListObj> getAll( ) {
+        ResponseListObj responseListObj = eventService.findAllEvents();
+
+        return new ResponseEntity<>(responseListObj, HttpStatus.OK);
+    }
     @GetMapping(value = "/get/name/{searchby}")
     public ResponseEntity<ResponseListObj> getByName(@RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "10") int size,
@@ -59,7 +65,7 @@ public class EventController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveEvent(@RequestBody @Valid Event e) {
+    public ResponseEntity<String> saveEvent(@RequestBody @Valid EventEntity e) {
         ResponseEntity<String> responseEntity=null;
         try {
                String dataSavedStatus= eventService.save(e);
@@ -74,7 +80,7 @@ public class EventController {
 
     }
     @PutMapping
-    public ResponseEntity<String> updateEvent(@RequestBody Event e) {
+    public ResponseEntity<String> updateEvent(@RequestBody EventEntity e) {
         ResponseEntity<String> responseEntity=null;
         try {
             String dataSavedStatus= eventService.save(e);
