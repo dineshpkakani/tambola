@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "prizemaster")
-public class Prize implements Serializable {
+public class PrizeEntity implements Serializable {
     @Id
     @Column(name="prizeid")
     private Long id;

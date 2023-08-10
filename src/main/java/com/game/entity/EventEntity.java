@@ -28,7 +28,7 @@ import java.util.Date;
 @Entity
 @DynamicUpdate
 @Table(name="eventmaster")
-public class Event implements Serializable {
+public class EventEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name="eid")
