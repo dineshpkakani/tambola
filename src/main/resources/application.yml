@@ -10,6 +10,7 @@ spring:
     properties:
       hibernate:
         diaclet: org.hibernate.diaclet.MySQL5Dialect
+        format_sql: true
     show-sql: true
 
 logging:
@@ -20,10 +21,6 @@ logging:
       springframework: DEBUG
       hibernate:
         sql: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
 
   devtools:
     restart:

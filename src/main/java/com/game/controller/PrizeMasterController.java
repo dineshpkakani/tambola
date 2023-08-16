@@ -25,4 +25,5 @@ public class PrizeMasterController {
         return prizeService.findNameList();
     }
 
+
 }

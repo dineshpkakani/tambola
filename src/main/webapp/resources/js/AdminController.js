@@ -8,6 +8,21 @@ app.controller('adminController', function($scope, $http) {
     $scope.eventID=0;
     $scope.txteventsearch='';
     $scope.prizeListData=[];
+
+    $scope.prizeconfigobj={
+        eventnameListData:[],
+        prizenameListData:[],
+        eventprizedata:[],
+        imagename:'',
+        eventdate:'',
+        prizename:'',
+        prizedisplayname:'',
+        eventname:'',
+        eventdisplayname:'',
+        prizeamount:'0',
+        qty:'0'
+
+    };
     $scope.summary={
         eventname:'',
         eventdate:'',
@@ -24,7 +39,14 @@ app.controller('adminController', function($scope, $http) {
 
         $scope.setScreen(1);
         $scope.loadEventList();
+
+        //prize master list
         $scope.priceList();
+
+        //event prize configure screen
+        $scope.loadEventnameList();
+        $scope.loadPrizenameList();
+
     }
 
     $scope.setScreen=function(scrnumber){
@@ -32,15 +54,18 @@ app.controller('adminController', function($scope, $http) {
             $("#eventmasterdiv").show();
             $("#pricemasterdiv").hide();
             $("#usermasterdiv").hide();
+            $("#diveventprizeconfigure").hide();
 
         }else if(scrnumber===2){//Price
             $("#eventmasterdiv").hide();
             $("#pricemasterdiv").show();
             $("#usermasterdiv").hide();
+            $("#diveventprizeconfigure").hide();
         }else if(scrnumber===3){//User
             $("#eventmasterdiv").hide();
             $("#pricemasterdiv").hide();
-            $("#usermasterdiv").show();
+            $("#usermasterdiv").hide();
+            $("#diveventprizeconfigure").show();
         }
 
     }
@@ -262,4 +287,151 @@ app.controller('adminController', function($scope, $http) {
             alert("Internal server error.Please Contact Developers.");
         }
     };
+    //Fill event name list
+    $scope.loadEventnameList=function () {
+
+        var urlName=$scope.appName+"/event/geteventname";
+
+        $scope.ajax(urlName,'','GET', function(response){
+                if(response.status===200){
+                    $scope.prizeconfigobj.eventnameListData=response.data.lst[0];
+                }else{
+                    alert(response.data.failed);
+                }
+            },
+            '');
+    };
+    //Fill prize name list in configure
+    $scope.loadPrizenameList=function () {
+
+        var urlName=$scope.appName+"/prizemaster/geteventname";
+        $scope.ajax(urlName,'','GET', function(response){
+                if(response.status===200){
+                    $scope.prizeconfigobj.prizenameListData=response.data.lst[0];
+                }else{
+                    alert(response.data.failed);
+                }
+           },
+            '');
+    };
+    $scope.setPrizeListforEvent=function (){
+        let data=$scope.prizeconfigobj.eventname.split("--");
+        $scope.prizeconfigobj.eventdate=data[1];
+        let EventID=data[0];
+
+        var urlName=$scope.appName+"/prizeconfigure/getAll/"+EventID;
+        $scope.ajax(urlName,'','GET', function(response){
+                if(response.status===200){
+                    $scope.prizeconfigobj.eventprizedata=response.data.lst[0];
+                }else{
+                    alert(response.data.failed);
+                }
+            },
+            '');
+
+    }
+    $scope.setPrizeConfigImagePath=function (imagepath){
+        $scope.prizeconfigobj.imagename=$scope.prizeconfigobj.prizename.split("--")[1];
+    }
+    $scope.addeventprize=function (){
+
+        if($scope.prizeconfigobj.eventname===''){
+            alert("Please select the Event.");
+            $("#sclteventname").focus();
+            return false;
+        }
+        if($scope.prizeconfigobj.prizename===''){
+            alert("Please select the Prize.");
+            $("#scltprizename").focus();
+            return false;
+        }
+        if($scope.prizeconfigobj.qty===''){
+            alert("Please select the Quantity.");
+            $("#prizeconfigqty").focus();
+            return false;
+        }
+        if(isNaN($scope.prizeconfigobj.qty)){
+            alert("Please enter numbers only in Quantity.");
+            $("#prizeconfigqty").focus();
+            return false;
+        }
+        $scope.prizeconfigobj.prizeamount='0';
+
+        try {
+            for (var i = 1; i <= $scope.prizeconfigobj.qty; i++) {
+                $("#txtprizeconfigqty" + i).val(0);
+            }
+        }catch (e){}
+        $scope.prizeconfigobj.eventdisplayname=$("#sclteventname option:selected").text();
+        $scope.prizeconfigobj.prizedisplayname=$("#scltprizename option:selected").text();
+
+
+        $("#addpriceconfigureddiv").fadeIn();
+    }
+    $scope.prizeConfigaddDialogClose=function (){
+        $("#addpriceconfigureddiv").fadeOut();
+    }
+    $scope.getNumbers=function(num) {
+        var x=new Array();
+        for(var i=0;i<num;i++){
+        x.push(i+1);
+        }
+        return x;
+    }
+    $scope.EventPrizeConfigSetAmount=function (val){
+
+        let size=$scope.prizeconfigobj.qty;
+        let amount=$scope.prizeconfigobj.prizeamount;
+        let equallyAmount=Math.trunc(amount/size);
+        var remainingamount=amount - (equallyAmount*size);
+        //if(val===1){
+            for(var i=1;i<size;i++) {
+                $("#txtprizeconfigqty"+i).val(equallyAmount);
+            }
+            $("#txtprizeconfigqty"+size).val(equallyAmount+remainingamount);
+    };
+
+    $scope.saveEventPrizeData=function (){
+        let qty=$scope.prizeconfigobj.qty;
+        let totalamount=$scope.prizeconfigobj.prizeamount;
+        let EventID=$scope.prizeconfigobj.eventname.split("--")[0];
+        let prizeID=$scope.prizeconfigobj.prizename.split("--")[0];
+        var newtotal=0;
+        if(totalamount==0){
+            alert("Please enter total amount");
+            return false;
+        }
+        for(var i=1;i<=qty;i++) {
+            let d=parseInt($("#txtprizeconfigqty"+i).val())
+            if(d==0 || d==''){
+                alert("Please enter all prize amount details");
+                return false;
+            }
+            newtotal+=d;
+        }
+        if(parseInt(totalamount)!==newtotal){
+            alert("Total is mismatch");
+            return false;
+        }
+
+        var payload={
+            prizeid:prizeID,
+            eventid:EventID
+        };
+        for(var i=1;i<=qty;i++) {
+            payload["seq"+i]=$("#txtprizeconfigqty"+i).val();
+        }
+        console.log(payload);
+        var urlName=$scope.appName+"/prizeconfigure";
+        var methodtype='POST';
+        let saveOrUpdate=parseInt($scope.eventID)===0;
+
+        $scope.ajax(urlName,param,methodtype, function(response){
+
+        },function (response){alert("Error while saving prize configuration");});
+
+    }
+
+
+
 });

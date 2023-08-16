@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface PrizeRepository extends CrudRepository<PrizeEntity,Long> {
-    @Query("SELECT p.prizename FROM PrizeEntity p")
-    List<String> findNameByQuery();
+    @Query("SELECT p.id,p.prizename,p.imagename FROM PrizeEntity p")
+    List<Object[]> findNameByQuery();
 }

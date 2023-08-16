@@ -2,7 +2,7 @@ package com.game.service;
 
 import com.game.dto.ResponseListObj;
 import com.game.entity.EventEntity;
-import com.game.repository.EventNameIntrfc;
+import com.game.modal.EventNameIntrfc;
 import com.game.repository.EventRepository;
 import com.game.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;

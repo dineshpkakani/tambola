@@ -10,21 +10,33 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="eventmaster")
+@Table(name="eventprizeconfigure")
 public class PrizeDetailEntity implements Serializable {
     @Id
     private Long id;
 
 
     // Unidirectional
-    @OneToOne(cascade = CascadeType.ALL)
+/*    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "eventid", referencedColumnName = "eid") //eventid(small case) column will refer as reference(Foriegn)
-    private EventEntity eventEntity;                                      // and referenced Column Name will refer primary of parent table column nmae not enity field name
+    private EventEntity eventEntity;          */                            // and referenced Column Name will refer primary of parent table column nmae not enity field name
 
+
+    @Column(name="eventid")
+    private int eventId;
 
     public void setId(Long id) {
         this.id = id;
     }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -36,13 +48,13 @@ public class PrizeDetailEntity implements Serializable {
     @Column(name="sequence")
     private int sequence;
 
-    public EventEntity getEventEntity() {
+/*    public EventEntity getEventEntity() {
         return eventEntity;
     }
 
     public void setEventEntity(EventEntity eventEntity) {
         this.eventEntity = eventEntity;
-    }
+    }*/
 
     public PrizeEntity getPrizeEntity() {
         return prizeEntity;

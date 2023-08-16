@@ -31,7 +31,7 @@ public class PrizeServiceImpl implements PrizeService{
 
     @Override
     public ResponseEntity<ResponseListObj> findNameList() {
-        List<String> pageData= prizeRepository.findNameByQuery();
+        List<Object[]> pageData= prizeRepository.findNameByQuery();
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .lst(Collections.singletonList(pageData))
                 .build();
