@@ -1,9 +1,8 @@
 package com.game.modal;
 
-public interface PrizeDetailDataModal {
+public interface PrizeDetailDataModel {
     String getPrizename();
     Integer getSequence();
-
     Integer getPrizevalue();
 
 }

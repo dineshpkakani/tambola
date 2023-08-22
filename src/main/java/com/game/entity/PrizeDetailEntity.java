@@ -3,16 +3,24 @@ package com.game.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="eventprizeconfigure")
 public class PrizeDetailEntity implements Serializable {
+
     @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
@@ -22,28 +30,32 @@ public class PrizeDetailEntity implements Serializable {
     private EventEntity eventEntity;          */                            // and referenced Column Name will refer primary of parent table column nmae not enity field name
 
 
-    @Column(name="eventid")
-    private int eventId;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "event_id", referencedColumnName = "eventId")
+    //private int eventId;
+    private EventEntity eventEntity;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public int getEventId() {
-        return eventId;
+    public EventEntity getEventEntity() {
+        return eventEntity;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setEventEntity(EventEntity eventEntity) {
+        this.eventEntity = eventEntity;
     }
 
     public Long getId() {
         return id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "prizeid", referencedColumnName = "prizeid")
+    @OneToOne(cascade = CascadeType.MERGE )
+    @JoinColumn(name = "prize_id", referencedColumnName = "prizeid")
     private PrizeEntity prizeEntity;
+
+
 
     @Column(name="sequence")
     private int sequence;

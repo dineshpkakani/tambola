@@ -1,7 +1,7 @@
 package com.game.secuirty;
 
 
-import com.game.entity.User;
+import com.game.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +29,7 @@ public class MyUserDetails implements UserDetails {
     private List<GrantedAuthority> authorities;
 
 
-    public MyUserDetails(User user) {
+    public MyUserDetails(UserEntity user) {
         this.userName=user.getUserName();
         this.password=user.getPassword();
         this.active=user.isActive();

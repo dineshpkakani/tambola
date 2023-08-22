@@ -3,6 +3,7 @@ package com.game.service;
 import com.game.dto.ResponseListObj;
 
 import com.game.entity.PrizeEntity;
+import com.game.modal.PrizeNameListModel;
 import com.game.repository.PrizeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PrizeServiceImpl implements PrizeService{
 
     @Override
     public ResponseEntity<ResponseListObj> findNameList() {
-        List<Object[]> pageData= prizeRepository.findNameByQuery();
+        List<PrizeNameListModel> pageData= prizeRepository.findNameByQuery();
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .lst(Collections.singletonList(pageData))
                 .build();

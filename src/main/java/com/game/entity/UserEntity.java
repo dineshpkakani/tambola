@@ -10,10 +10,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
     private long id;
 
@@ -21,8 +21,8 @@ public class User {
     private String userName;
     private String password;
 
-    @Column(name="enabled")
-    private boolean active;
+    @Column(name="enabled",columnDefinition = "boolean default true")
+    private boolean active=true;
     private String roles;
 
     public long getId() {

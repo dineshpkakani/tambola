@@ -1,7 +1,7 @@
 package com.game.repository;
 
 import com.game.entity.EventEntity;
-import com.game.modal.EventNameIntrfc;
+import com.game.modal.EventNameModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,7 +26,8 @@ public interface EventRepository extends JpaRepository<EventEntity,Long> {
    /* @EntityGraph(value = "entityname")
     List<EventEntity> findAlleventByEntityGraph();*/
 
-    List<EventNameIntrfc> findAllByStatus(String status);
+    @Query("select eventId as eventId,name as name,eventDate as eventDate,status as status from EventEntity ")
+    List<EventNameModel> findAllEvents();
 
 
 

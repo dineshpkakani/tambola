@@ -1,16 +1,23 @@
 package com.game.entity;
 
+import org.hibernate.annotations.Where;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "prizemaster")
+@Where(clause = " delflag=0")
 public class PrizeEntity implements Serializable {
+
     @Id
     @Column(name="prizeid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="prizename")

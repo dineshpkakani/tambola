@@ -116,9 +116,16 @@ app.controller('adminController', function($scope, $http) {
         $scope.loadEventList();
     }
     $scope.loadEventListSuccess=function (response){
-        $scope.eventList=response.data.lst[0];
-        $scope.totalCount=response.data.totalrecords;
+        if(response.status===200) {
+            $scope.eventList = response.data.lst[0];
+            $scope.totalCount = response.data.totalrecords;
+
+        }else{
+            $scope.eventList =[];
+            $scope.totalCount =0;
+        }
         $scope.updateEventPaginations();
+
     };
     $scope.loadEventDataForID=function (response){
         let data=response.data.lst[0];
@@ -304,7 +311,7 @@ app.controller('adminController', function($scope, $http) {
     //Fill prize name list in configure
     $scope.loadPrizenameList=function () {
 
-        var urlName=$scope.appName+"/prizemaster/geteventname";
+        var urlName=$scope.appName+"/prizemaster/getname";
         $scope.ajax(urlName,'','GET', function(response){
                 if(response.status===200){
                     $scope.prizeconfigobj.prizenameListData=response.data.lst[0];
@@ -384,11 +391,10 @@ app.controller('adminController', function($scope, $http) {
         let amount=$scope.prizeconfigobj.prizeamount;
         let equallyAmount=Math.trunc(amount/size);
         var remainingamount=amount - (equallyAmount*size);
-        //if(val===1){
-            for(var i=1;i<size;i++) {
-                $("#txtprizeconfigqty"+i).val(equallyAmount);
-            }
-            $("#txtprizeconfigqty"+size).val(equallyAmount+remainingamount);
+        for(var i=1;i<size;i++) {
+            $("#txtprizeconfigqty"+i).val(equallyAmount);
+        }
+        $("#txtprizeconfigqty"+size).val(equallyAmount+remainingamount);
     };
 
     $scope.saveEventPrizeData=function (){
@@ -414,19 +420,27 @@ app.controller('adminController', function($scope, $http) {
             return false;
         }
 
-        var payload={
-            prizeid:prizeID,
-            eventid:EventID
-        };
+
+        var prizeconfig = new Array();
         for(var i=1;i<=qty;i++) {
-            payload["seq"+i]=$("#txtprizeconfigqty"+i).val();
+            let payload={
+                "prizeEntity": {
+                    "id":prizeID
+                },
+                "eventEntity": {
+                    "eventId":EventID
+                },
+                    "sequence":i,
+                    "prizevalue":$("#txtprizeconfigqty"+i).val()
+            }
+            prizeconfig.push(payload)
         }
-        console.log(payload);
+        console.log(prizeconfig);
         var urlName=$scope.appName+"/prizeconfigure";
         var methodtype='POST';
         let saveOrUpdate=parseInt($scope.eventID)===0;
 
-        $scope.ajax(urlName,param,methodtype, function(response){
+        $scope.ajax(urlName,prizeconfig,methodtype, function(response){
 
         },function (response){alert("Error while saving prize configuration");});
 

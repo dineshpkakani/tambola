@@ -2,7 +2,7 @@ package com.game.service;
 
 import com.game.dto.ResponseListObj;
 import com.game.entity.EventEntity;
-import com.game.modal.EventNameIntrfc;
+import com.game.modal.EventNameModel;
 import com.game.repository.EventRepository;
 import com.game.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,25 +43,13 @@ public class EventServiceImpl implements EventService{
     @Override
     public ResponseListObj findAllEvents() {
 
-        List<EventNameIntrfc> pageData= eventRepository.findAllByStatus("Not started");
+        List<EventNameModel> pageData= eventRepository.findAllEvents();
 
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .lst(Collections.singletonList(pageData))
                 .build();
         return responseListObj;
     }
-
-  /*  @Override
-    public ResponseListObj findAllEvents() {
-
-
-    }*/
-
-
-
-
-
-
     @Override
     public ResponseListObj findByNameStartsWith(String byTitle, int pageno, int length) {
         Pageable paging = PageRequest.of(pageno, length, Sort.by("Name").ascending());

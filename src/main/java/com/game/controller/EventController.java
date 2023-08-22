@@ -28,9 +28,7 @@ public class EventController {
     }
 
     @GetMapping(value = "/getAll")
-    public ResponseEntity<ResponseListObj> getAll(@RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "3") int size
-                                                      ) {
+    public ResponseEntity<ResponseListObj> getAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "3") int size) {
       ResponseListObj responseListObj = eventService.findAllEvents(page,size);
         if(responseListObj.getTotalrecords()==0)
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
@@ -56,9 +54,7 @@ public class EventController {
     }
     @GetMapping(value = "/get/id/{id}")
     public ResponseEntity<ResponseListObj> getByEventId(@PathVariable long id) {
-
         ResponseListObj responseListObj= eventService.findByEventId(id);
-
         if(responseListObj.getLst().size()==0)
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(responseListObj, HttpStatus.OK);

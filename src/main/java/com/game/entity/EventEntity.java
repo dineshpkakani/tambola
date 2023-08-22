@@ -3,6 +3,8 @@ package com.game.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,17 +23,30 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 
+/*
+
+We are using the @SQLDelete annotation to override the delete command. Every time we execute the delete command,
+we actually have turned it into a SQL update command that changes the deleted field value to true instead of deleting the data permanently.
+ */
+
+/*
+The @Where annotation, on the other hand, will add a filter when we read the product data. So, according to the code example above,
+product data with the value deleted = true won't be included within the results.
+ */
+
 @NamedEntityGraph(name = "entityname",          attributeNodes =  {
         @NamedAttributeNode("name")
 }
 )
 @Entity
-@DynamicUpdate
+//@DynamicUpdate
 @Table(name="eventmaster")
+@SQLDelete(sql = "UPDATE eventmaster SET delFlag = 1 WHERE id=?") // if you are deleting then jpa will convert update and make it delflag=1
+@Where(clause = " delflag=0")
 public class EventEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name="eid")
+    @Column(name="eventid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long eventId;
 
@@ -69,6 +84,17 @@ public class EventEntity implements Serializable {
 
     @Column(name="createdby")
     Long userid;
+
+    @Column(name="delflag",columnDefinition = "int(1) default 0")
+    int delFlag=0;
+
+    public int getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
+    }
 
     public Long getUserid() {
         return userid;

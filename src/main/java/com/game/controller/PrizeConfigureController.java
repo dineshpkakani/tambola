@@ -20,7 +20,7 @@ public class PrizeConfigureController {
         this.prizeConfigureService = prizeConfigureService;
     }
     @GetMapping("/getAll/{eventid}")
-    public ResponseListObj getAllPrizeDetails(@PathVariable int eventid) {
+    public ResponseListObj getAllPrizeDetails(@PathVariable long eventid) {
         return prizeConfigureService.getAllByEventById(eventid);
     }
 

@@ -1,6 +1,6 @@
 package com.game.secuirty;
 
-import com.game.entity.User;
+import com.game.entity.UserEntity;
 import com.game.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class MyUserDetailService implements UserDetailsService {
     UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Optional<User> user= userRepository.findByUserName(userName);
+        Optional<UserEntity> user= userRepository.findByUserName(userName);
         user.orElseThrow(()->new UsernameNotFoundException("User not found::"+userName));
         return user.map(MyUserDetails::new).get();
     }

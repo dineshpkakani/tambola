@@ -8,8 +8,8 @@ import java.util.List;
 
 
 public interface PrizeConfigureService {
-    ResponseListObj getAllByEventById(int eventid);
-    ResponseListObj getAllByEventByIdNew(int eventid);
+    ResponseListObj getAllByEventById(long eventid);
+    ResponseListObj getAllByEventByIdNew(long eventid);
 
     ResponseListObj saveAll(List<PrizeDetailEntity> lst);
 

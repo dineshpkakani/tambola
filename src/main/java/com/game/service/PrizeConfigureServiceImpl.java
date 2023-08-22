@@ -2,9 +2,10 @@ package com.game.service;
 
 import com.game.dto.ResponseListObj;
 import com.game.entity.PrizeDetailEntity;
-import com.game.modal.PrizeDetailDataModal;
+import com.game.modal.PrizeDetailDataModel;
 import com.game.repository.PrizeDetailRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +20,8 @@ public class PrizeConfigureServiceImpl implements PrizeConfigureService{
     }
 
     @Override
-    public ResponseListObj getAllByEventById(int eventid) {
-        List<PrizeDetailDataModal> pageData= prizeDetailRepository.findByEventId(eventid);
+    public ResponseListObj getAllByEventById(long eventid) {
+        List<PrizeDetailDataModel> pageData= prizeDetailRepository.findByEventId(eventid);
 
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .lst(Collections.singletonList(pageData))
@@ -29,17 +30,18 @@ public class PrizeConfigureServiceImpl implements PrizeConfigureService{
 
     }
     @Override
-    public ResponseListObj getAllByEventByIdNew(int eventid) {
-        List<Object[]> pageData= prizeDetailRepository.findByEventIdNew(eventid);
+    public ResponseListObj getAllByEventByIdNew(long eventid) {
+       List<Object[]> pageData= prizeDetailRepository.findByEventIdNew(eventid);
 
         ResponseListObj responseListObj= ResponseListObj.builder()
                 .lst(Collections.singletonList(pageData))
                 .build();
-        return responseListObj;
+        return null;
 
     }
 
     @Override
+    @Transactional
     public ResponseListObj saveAll(List<PrizeDetailEntity> lst) {
         prizeDetailRepository.saveAll(lst);
         return null;
