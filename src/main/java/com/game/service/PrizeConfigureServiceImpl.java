@@ -1,7 +1,9 @@
 package com.game.service;
 
 import com.game.dto.ResponseListObj;
+import com.game.entity.EventEntity;
 import com.game.entity.PrizeDetailEntity;
+import com.game.entity.PrizeEntity;
 import com.game.modal.PrizeDetailDataModel;
 import com.game.repository.PrizeDetailRepository;
 import org.springframework.stereotype.Service;
@@ -43,8 +45,23 @@ public class PrizeConfigureServiceImpl implements PrizeConfigureService{
     @Override
     @Transactional
     public ResponseListObj saveAll(List<PrizeDetailEntity> lst) {
-        prizeDetailRepository.saveAll(lst);
-        return null;
+       EventEntity eventEntity=lst.get(0).getEventEntity();
+        PrizeEntity prizeEntity=lst.get(0).getPrizeEntity();
+
+        if(findPrizeConfigureWithEventAndPrize(eventEntity,prizeEntity)){
+            prizeDetailRepository.saveAll(lst);
+            return ResponseListObj.builder().lst(Collections.singletonList("Saved successfully")).build();
+        }else{
+            return ResponseListObj.builder().lst(Collections.singletonList("Already exist")).build();
+        }
+
+
+    }
+
+    @Override
+    public boolean findPrizeConfigureWithEventAndPrize(EventEntity eventEntity, PrizeEntity prizeEntity) {
+        List<PrizeDetailEntity> prizeDetailEntities= prizeDetailRepository.findByEventEntityAndPrizeEntity(eventEntity,prizeEntity);
+        return prizeDetailEntities.size()==0;
     }
 
 

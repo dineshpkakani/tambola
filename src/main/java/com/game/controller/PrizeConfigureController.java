@@ -30,6 +30,7 @@ public class PrizeConfigureController {
         }*/
     @PostMapping
     public ResponseListObj saveAll(@RequestBody List<PrizeDetailEntity> persons) {
+
         prizeConfigureService.saveAll(persons);
         return null;
     }

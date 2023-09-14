@@ -352,7 +352,7 @@ app.controller('adminController', function($scope, $http) {
             $("#scltprizename").focus();
             return false;
         }
-        if($scope.prizeconfigobj.qty===''){
+        if($scope.prizeconfigobj.qty==='' ||$scope.prizeconfigobj.qty==='0'){
             alert("Please select the Quantity.");
             $("#prizeconfigqty").focus();
             return false;
